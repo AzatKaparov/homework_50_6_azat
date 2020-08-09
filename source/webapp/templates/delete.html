@@ -13,8 +13,10 @@
     <div class="card my-4" style="width: 18rem">
         <div class="card-body">
             <h5 class="card-title">{{ task.summary }}</h5>
-            <i><h6 class="card-category">{{ task.status }}</h6></i>
-            <i><h6 class="card-category">{{ task.type }}</h6></i>
+            <h6 class="card-status px-1 py-1">Статус: <i>{{ task.status }}</i></h6>
+            <h6 class="card-type px-1 py-1">Типы задачи: {% for type in task.type.all %}
+                <i>{{ type.name }};</i>
+            {% endfor %}</h6>
             <hr/>
             {% if task.description %}
             <p class="price">{{ task.description }}</p>

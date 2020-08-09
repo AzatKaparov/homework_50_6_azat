@@ -10,9 +10,9 @@
             <div class="card my-4" style="width: 18rem">
                 <div class="card-body">
                     <h5 class="card-title">{{ task.summary }}</h5>
-                    <h6 class="card-category">Статус: <i>{{ task.status }}</i></h6>
-                    <h6 class="card-category">Типы задачи: {% for type in task.type.all %}
-                        <i>{{ type.name }}</i>
+                    <h6 class="card-status px-1 py-1">Статус: <i>{{ task.status }}</i></h6>
+                    <h6 class="card-type px-1 py-1">Типы задачи: {% for type in task.type.all %}
+                        <i>{{ type.name }};</i>
                     {% endfor %}
                     </h6>
                     <p class="price">{{ task.created_at }}</p>

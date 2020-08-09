@@ -17,12 +17,10 @@
     <div class="card my-4" style="width: 18rem">
         <div class="card-body">
             <h5 class="card-title">{{ task.summary }}</h5>
-            <i><h6 class="card-category">{{ task.status }}</h6></i>
-        {% if task.type %}
-            {% for type in task.type.all %}
-            <i><h6 class="card-category">{{ type.name }}</h6></i>
-            {% endfor %}
-        {% endif %}
+            <i><h6 class="card-status px-1 py-1">Статус: {{ task.status }}</h6></i> <br/>
+            <h6 class="card-type px-1 py-1">Типы задачи: {% for type in task.type.all %}
+                <i>{{ type.name }};</i>
+                    {% endfor %}</h6>
             <hr/>
             {% if task.description %}
             <p class="pre">{{ task.description }}</p>

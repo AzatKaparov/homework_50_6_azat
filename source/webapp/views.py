@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.utils.timezone import make_naive
 from webapp.models import Task, Type, Status
 from django.views.generic import View, TemplateView, FormView
 from .forms import TaskForm, BROWSER_DATETIME_FORMAT
@@ -22,43 +21,24 @@ class TaskView(TemplateView):
         return render(request, 'view.html', context)
 
 
-# class CreateView(TemplateView):
-#     def get(self, request, *args, **kwargs):
-#             form = TaskForm()
-#             return render(request, 'create.html', context={
-#                 'form': form
-#             })
-#
-#     def post(self, request):
-#         form = TaskForm(data=request.POST)
-#         if form.is_valid():
-#             task = Task.objects.create(
-#                 summary=form.cleaned_data['summary'],
-#                 description=form.cleaned_data['description'],
-#                 type=form.cleaned_data['type'],
-#                 status=form.cleaned_data['status'],
-#             )
-#         else:
-#             return render(request, 'create.html', context={
-#                 'form': form
-#             })
-#
-#         return redirect('view', pk=task.pk)
-
-
 class CreateView(FormView):
     template_name = 'create.html'
     form_class = TaskForm
 
     def form_valid(self, form):
         data = {}
+        type = form.cleaned_data.pop('type')
         for key, value in form.cleaned_data.items():
             if value is not None:
                 data[key] = value
         self.task = Task.objects.create(**data)
+        self.task.type.set(type)
         return super().form_valid(form)
 
     def get_redirect_url(self):
+        return reverse('view', kwargs={'pk': self.task.pk})
+
+    def get_success_url(self):
         return reverse('view', kwargs={'pk': self.task.pk})
 
 
