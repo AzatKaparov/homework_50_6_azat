@@ -3,7 +3,7 @@ from .models import Type, Task, Status
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('summary', 'status', 'type', 'created_at')
+    list_display = ('summary', 'status', 'created_at')
     fields = ['summary', 'description', 'status', 'type']
     search_fields = ('summary',)
     list_filter = ('status',)
